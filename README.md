@@ -19,6 +19,7 @@ This is a Starter Template with Docker setup for a Django Project.
 2. Navigate to the project directory.
 3. Run the following command to set up the project: bash setup.sh project_name app_name
     * Ex. bash setup.sh sample_project app
+4. This will start the project and run the app in localhost port 8080 and other related services.
 
 ## Services
 * Django Web Server (app)
@@ -28,3 +29,10 @@ This is a Starter Template with Docker setup for a Django Project.
 * Celery Worker (worker)
 * Celery Beat Scheduler (celerybeat)
 * Celery Flower (flower)
+
+
+## Pages
+* Django Admin (http://localhost/admin/)
+* Swagger API Documentation (http://localhost/api/docs/)
+* Redoc API Documentation (http://localhost/api/redoc/)
+* Flower Admin Interface (http://localhost:5555)

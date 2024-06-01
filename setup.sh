@@ -380,6 +380,11 @@ services:
       - .env.dev
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
     command: >
       sh -c "python manage.py collectstatic --noinput &&
              python manage.py makemigrations &&
@@ -396,6 +401,11 @@ services:
       - redis
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   celerybeat:
     build: .
@@ -408,6 +418,11 @@ services:
       - redis
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   flower:
     build: .
@@ -418,6 +433,11 @@ services:
       - worker
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
 networks:
   $PROJECT_NAME-network:
@@ -425,7 +445,6 @@ networks:
 volumes:
   redis_data:
   postgres_data:
-  elasticsearch_data:
 
 EOL
 
@@ -485,6 +504,11 @@ services:
       - .env.dev
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
     command: >
       sh -c "python manage.py collectstatic --noinput &&
              python manage.py makemigrations &&
@@ -501,6 +525,11 @@ services:
       - redis
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   celerybeat:
     build: .
@@ -513,6 +542,11 @@ services:
       - redis
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   flower:
     build: .
@@ -523,6 +557,11 @@ services:
       - worker
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
 networks:
   $PROJECT_NAME-network:
@@ -530,7 +569,6 @@ networks:
 volumes:
   redis_data:
   postgres_data:
-  elasticsearch_data:
 
 EOL
 
@@ -587,9 +625,14 @@ services:
       - postgres:postgres
       - redis:redis
     env_file:
-      - .env.prod
+      - .env.dev
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
     command: >
       sh -c "python manage.py collectstatic --noinput &&
              python manage.py makemigrations &&
@@ -606,6 +649,11 @@ services:
       - redis
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   celerybeat:
     build: .
@@ -618,6 +666,11 @@ services:
       - redis
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   flower:
     build: .
@@ -628,6 +681,11 @@ services:
       - worker
     networks:
       - $PROJECT_NAME-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
 networks:
   $PROJECT_NAME-network:
@@ -635,7 +693,6 @@ networks:
 volumes:
   redis_data:
   postgres_data:
-  elasticsearch_data:
 
 EOL
 
@@ -865,6 +922,8 @@ mkdir -p media
 
 echo "Creating .gitignore file in the media directory..."
 echo "*" > media/.gitignore
+
+EOL
 
 echo "Creating User CRUD with OAuth2 implementation..."
 cat <<EOL > $APP_NAME/serializers.py
@@ -1269,10 +1328,15 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '/var/log/app/debug.log',
+        },
     },
     'loggers': {
         '': {
-            'handlers': ['console'],
+            'handlers': ['console', 'file'],
             'level': 'DEBUG' if DEBUG else 'INFO',
             'propagate': True,
         },
