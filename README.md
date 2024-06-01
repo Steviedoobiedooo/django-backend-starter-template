@@ -1,7 +1,7 @@
 # Django Framework Starter Template
 
 ## Author
-* [Steve Miayo]
+* [Steve Miayo] (https://github.com/Steviedoobiedooo)
 
 This is a Starter Template with Docker setup for a Django Project.
 
