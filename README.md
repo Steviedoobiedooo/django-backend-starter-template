@@ -17,8 +17,7 @@ This is a Starter Template with Docker setup for a Django Project.
 
 1. Make sure Docker Desktop is running.
 2. Navigate to the project directory.
-3. Run the following command to set up the project:
-    * bash setup.sh <project-name> <app-name>
+3. Run the following command to set up the project: bash setup.sh project_name app_name
     * Ex. bash setup.sh sample_project app
 
 ## Services
